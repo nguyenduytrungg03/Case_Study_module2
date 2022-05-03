@@ -1,22 +1,24 @@
-package services.Impl;
+package services.impl;
 
 
 import models.person.Employee;
 import services.EmployeeServices;
+import utils.exception.ExceptionInput;
+import utils.ReadAndWrite;
+import utils.regex.RegexPerson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
+
+import static controllers.FuramaController.scanner;
+import static utils.ReadAndWrite.reWriteToFileEmployee;
 
 public class EmployeeServiceImpl implements EmployeeServices {
-    public static List<Employee> employeeList = new ArrayList<>();
-    static Scanner scanner = new Scanner(System.in);
+    public static List<Employee> employeeList = getEmployeeList();
+    final static String EMPLOYEE_LIST = "src\\data\\employee.csv";
 
-    static {
-        Employee employee = new Employee(1,"Tùng","21/02/1999","ĐN","nam","124567","099238422","dbgoics@gmail.com","Đại Học","Lễ Tân",100000);
-        employeeList.add(employee);
 
-    }
 
     @Override
     public void display() {
@@ -25,53 +27,75 @@ public class EmployeeServiceImpl implements EmployeeServices {
         }
     }
 
+    public static List<Employee> getEmployeeList() {
+        List<String[]> listStr = ReadAndWrite.readFile(EMPLOYEE_LIST);
+
+        List<Employee> listFileEmployee = new ArrayList<>();
+        for (String[] item : listStr) {
+            listFileEmployee.add(new Employee(Integer.parseInt(item[0]),
+                    item[1], item[2],
+                    item[3], item[4],
+                    item[5], item[6],
+                    item[7], item[8],
+                    item[9], Integer.parseInt(item[10])));
+        }
+        return listFileEmployee;
+    }
+
     @Override
     public void addNew() {
         System.out.println("nhập id: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = RegexPerson.regexId();
         if (isExisted(id) != null) {
             System.out.println("id này đã có rồi");
             return;
-        }else {
+        } else {
             System.out.println("nhập tên: ");
             String name = scanner.nextLine();
 
-            System.out.println("nhập ngày tháng năm sinh: ");
-            String dateOfBirth = scanner.nextLine();
+            String dateOfBirth = RegexPerson.regexAge();
+
 
             System.out.println("nhập địa chỉ: ");
             String address = scanner.nextLine();
 
+
+            System.out.println("1.Nam" + "  " + "2.Nữ");
             System.out.println("nhập giới tính: ");
-            String gender = scanner.nextLine();
+            String gender = ExceptionInput.getGender();
+
 
             System.out.println("Nhập chứng minh thư: ");
             String idCard = scanner.nextLine();
 
-            System.out.println("nhập số điện thoại: ");
-            String phoneNumber = scanner.nextLine();
 
-            System.out.println("Nhập gmail: ");
-            String email = scanner.nextLine();
-
-            System.out.println("[Trung cấp" + "," + " Cao Đẳng" + "," + " Đại học" + "," + " Sau đại học]");
-            System.out.println("Nhập trình độ học vấn");
-            String academyLevel = scanner.nextLine();
+            String phoneNumber = RegexPerson.regexNumberPhone();
 
 
-            System.out.println("[Lễ tân " + "," + " Phục vụ" + "," + " Chuyên viên" + "," + " Giám sát" + "," + " Quản lý" + "," + " Giám đốc]");
+            String email = RegexPerson.regexEmail();
+
+
+            System.out.println("1.Trung cấp" + "," + " 2.Cao Đẳng" + "," + " 3.Đại học" + "," + " 4.Sau đại học");
+            System.out.println("Nhập học vấn:");
+            String academyLevel = ExceptionInput.getAcademyLevel();
+
+
+            System.out.println(" 1.Lễ tân " + "," + " 2.Phục vụ" + "," + " 3.Chuyên viên" + "," + " 4.Giám sát" + "," + " 5.Quản lý" + "," + " 6.Giám đốc");
             System.out.println("Nhập vị trí: ");
-            String position = scanner.nextLine();
+            String position = ExceptionInput.getPosition();
 
             System.out.println("Nhập lương");
             int salary = Integer.parseInt(scanner.nextLine());
-            System.out.println("Thêm thành công ^^");
-
-            employeeList.add(new Employee(id, name,
+            Employee employee = new Employee(id, name,
                     dateOfBirth, address, gender,
                     idCard, phoneNumber,
                     email, academyLevel,
-                    position, salary));
+                    position, salary);
+            employeeList.add(employee);
+
+            ReadAndWrite.writerFile(EMPLOYEE_LIST, employee.writeToFile());
+            System.out.println("Thêm thành công ^^");
+
         }
     }
 
@@ -80,8 +104,8 @@ public class EmployeeServiceImpl implements EmployeeServices {
         System.out.println("Nhập id muốn sửa: ");
         int id = Integer.parseInt(scanner.nextLine());
         boolean check = true;
-        for (int i = 0; i <employeeList.size() ; i++) {
-            if (id == employeeList.get(i).getId()){
+        for (int i = 0; i < employeeList.size(); i++) {
+            if (id == employeeList.get(i).getId()) {
                 System.out.println("Nhập tên muốn sửa: ");
                 employeeList.get(i).setName(scanner.nextLine());
                 System.out.println("Nhập lại ngày sinh: ");
@@ -104,11 +128,13 @@ public class EmployeeServiceImpl implements EmployeeServices {
                 employeeList.get(i).setPosition(scanner.nextLine());
                 System.out.println("Nhập số tiền lương muốn sửa: ");
                 employeeList.get(i).setSalary(Integer.parseInt(scanner.nextLine()));
+                reWriteToFileEmployee(employeeList,EMPLOYEE_LIST);
                 System.out.println("sửa thành công");
-                check= false;
+                check = false;
                 break;
             }
-            }if (check){
+        }
+        if (check) {
             System.out.println("Nhập lại đi...Id không có trong danh sách!!!");
         }
     }

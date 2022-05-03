@@ -1,4 +1,4 @@
 package services;
 
-public interface ContractService extends Services {
+public interface ContractService {
 }

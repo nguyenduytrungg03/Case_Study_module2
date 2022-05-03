@@ -1,21 +1,21 @@
 package controllers;
 
-import models.person.Customer;
-import models.person.Employee;
 import services.CustomerServices;
-import services.Impl.CustomerServiceImpl;
-import services.Impl.EmployeeServiceImpl;
+import services.impl.CustomerServiceImpl;
+import services.impl.EmployeeServiceImpl;
+import services.impl.FacilityServiceImpl;
 
 import java.util.Scanner;
+import static utils.exception.ExceptionMenu.exceptiondisplayMainMenu;
 
 public class FuramaController {
+    public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         displayMainMenu();
     }
 
     public static void displayMainMenu() {
-        boolean check = true;
-        while (check) {
+        while (true) {
             System.out.println("-----**MENU**-----");
             System.out.println("1.Employee Management");
             System.out.println("2.Customer Management");
@@ -25,9 +25,8 @@ public class FuramaController {
             System.out.println("6.EXIT");
             System.out.println("Enter number: ");
 
-            Scanner sc = new Scanner(System.in);
 
-            switch (Integer.parseInt(sc.nextLine())) {
+            switch (exceptiondisplayMainMenu()) {  // 1 -> 6   a 7>
                 case 1:
                     displayEmployeeMenu();
                     break;
@@ -35,7 +34,7 @@ public class FuramaController {
                     displayCustomer();
                     break;
                 case 3:
-                    displayFacility();
+                    displayFacilityMenu();
                     break;
                 case 4:
                     displayBooking();
@@ -50,17 +49,16 @@ public class FuramaController {
         }
     }
 
-    public static void displayEmployeeMenu() {
+    public static void displayEmployeeMenu()  {
         EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
-        boolean check = true;
+        boolean check =true;
         while (check) {
             System.out.println("1.Display list employee");
             System.out.println("2.Add new employee");
             System.out.println("3.Edit employee");
             System.out.println("4.Back to menu");
-            Scanner sc = new Scanner(System.in);
 
-            switch (Integer.parseInt(sc.nextLine())) {
+            switch (Integer.parseInt(scanner.nextLine())) {
                 case 1:
                     employeeService.display();
                     break;
@@ -79,13 +77,12 @@ public class FuramaController {
     public static void displayCustomer() {
         boolean check = true;
         CustomerServices customerServices = new CustomerServiceImpl();
-        while (check) {
+        while (true) {
             System.out.println("1.Display list customers ");
             System.out.println("2.Add new customer");
             System.out.println("3.Edit customer");
             System.out.println("4.Return main menu");
-            Scanner sc = new Scanner(System.in);
-            switch (Integer.parseInt(sc.nextLine())) {
+            switch (Integer.parseInt(scanner.nextLine())) {
                 case 1:
                     customerServices.display();
                     break;
@@ -102,20 +99,55 @@ public class FuramaController {
         }
     }
 
-    public static void displayFacility() {
+    public static void displayFacilityMenu() {
+        FacilityServiceImpl facilityService = new FacilityServiceImpl();
         boolean check = true;
-        while (check) {
+        while (true) {
             System.out.println("1.Display list facility ");
             System.out.println("2.Add new facility");
-            System.out.println("3.Edit facility");
+            System.out.println("3.Display list facility Maintenance");
             System.out.println("4.Return main menu");
-            Scanner sc = new Scanner(System.in);
-            switch (Integer.parseInt(sc.nextLine())) {
+
+            switch (Integer.parseInt(scanner.nextLine())) {
                 case 1:
+                    facilityService.display();
+                    break;
+                case 2:
+                    addNewFacilityMenu();
+                    break;
+                case 3:
+
+                case 4:
+                    return;
+            }
+
+        }
+    }
+
+    public static void addNewFacilityMenu() {
+        FacilityServiceImpl facilityService = new FacilityServiceImpl();
+        boolean check = true;
+        while (check) {
+            System.out.println("1.Add new House");
+            System.out.println("2.Add new Room");
+            System.out.println("3.Add new Villa");
+            System.out.println("4.Return main menu");
+
+            switch (Integer.parseInt(scanner.nextLine())) {
+                case 1:
+                    facilityService.addNewHouse();
+                    check=false;
+                    break;
 
                 case 2:
+                    facilityService.addNewRoom();
+                    check=false;
+                    break;
 
                 case 3:
+                    facilityService.addNewVilla();
+                    check=false;
+                    break;
 
                 case 4:
                     return;

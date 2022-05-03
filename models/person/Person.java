@@ -51,9 +51,15 @@ public abstract class Person {
     @Override
     public String toString() {
         return "Person: " +
-                "id= " + id +
+                ", id= " + id +
                 ", name= " + name +
                 ", dateOfBirth= " + dateOfBirth +
                 ", address= " + address ;
     }
+     public String writeToFile(){
+        return id + "," +
+               name + "," +
+               dateOfBirth + "," +
+               address;
+     }
 }

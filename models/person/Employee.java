@@ -11,9 +11,15 @@ public class Employee extends Person {
     private int salary;
 
     public Employee() {
+
     }
 
-    public Employee(int id, String name, String dateOfBirth, String address, String gender, String idCard, String phoneNumber, String email, String academyLevel, String position, int salary) {
+    public Employee(int id, String name,
+                    String dateOfBirth, String address,
+                    String gender, String idCard,
+                    String phoneNumber, String email,
+                    String academyLevel, String position,
+                    int salary) {
         super(id, name, dateOfBirth, address);
 
         this.gender = gender;
@@ -135,5 +141,16 @@ public class Employee extends Person {
                 ", academyLevel= " + academyLevel +
                 ", position= " + position +
                 ", salary= " + salary;
+    }
+    public String writeToFile(){
+        return super.writeToFile()+","+
+                gender + ","
+                + idCard + ","
+                + phoneNumber + ","
+                + email + ","
+                + academyLevel + ","
+                + position + ","
+                + salary;
+
     }
 }

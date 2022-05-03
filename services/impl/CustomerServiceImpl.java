@@ -1,21 +1,44 @@
-package services.Impl;
+package services.impl;
 
 import models.person.Customer;
 import services.CustomerServices;
+import utils.exception.ExceptionInput;
+import utils.ReadAndWrite;
+import utils.regex.RegexPerson;
 
 import java.util.ArrayList;;
 import java.util.List;
 import java.util.Scanner;
 
 public class CustomerServiceImpl implements CustomerServices {
-    private  static List<Customer> customerList = new ArrayList<>();
+    private  static List<Customer> customerList =getCustomerList();
     private Scanner scanner = new Scanner(System.in);
+    final static String CUSTOMER_LIST  = "src\\data\\customer.csv";    
 
     @Override
     public void display() {
         for (Customer customer: customerList) {
             System.out.println(customer);
         }
+    }
+    public static List<Customer> getCustomerList(){
+        List<String[]> listStr = ReadAndWrite.readFile(CUSTOMER_LIST);
+        
+        List<Customer> listFileCustomer = new ArrayList<>();
+
+       Customer customer;
+        for (String[] item: listStr) {
+            listFileCustomer.add(new Customer(Integer.parseInt(item[0]),
+                    item[1],
+                    item[2],
+                    item[3],
+                    item[4],
+                    item[5],
+                    item[6],
+                    item[7],
+                    item[8]));
+        }
+        return listFileCustomer;
     }
 
     @Override
@@ -29,30 +52,42 @@ public class CustomerServiceImpl implements CustomerServices {
             System.out.println("nhập tên : ");
             String name = scanner.nextLine();
 
-            System.out.println("nhập ngày sinh: ");
-            String dateOfBirth = scanner.nextLine();
+            String dateOfBirth = RegexPerson.regexAge();
 
             System.out.println("nhập địa chỉ: ");
             String address = scanner.nextLine();
 
+            System.out.println("1.Nam" + "  " + "2.Nữ");
             System.out.println("nhập giới tính: ");
-            String gender = scanner.nextLine();
+            String gender = ExceptionInput.getGender();
 
             System.out.println("Nhập chứng minh thư: ");
             String idCard = scanner.nextLine();
 
-            System.out.println("nhập số điện thoại: ");
-            String phoneNumber = scanner.nextLine();
+            String phoneNumber = RegexPerson.regexNumberPhone();
 
-            System.out.println("Nhập gmail: ");
-            String email = scanner.nextLine();
 
-            System.out.println("[Diamond" + "," + " Platinium" + "," + " Gold" + "," + " Silver" + "," + " Member]");
+            String email = RegexPerson.regexEmail();
+
+            System.out.println("1.Diamond" + "," + " 2.Platinium" + "," + " 3.Gold" + "," + " 4.Silver" + "," + " 5.Member");
             System.out.println("Nhập loại khách: ");
-            String type = scanner.nextLine();
-            System.out.println("Thêm mới thành công ^^");
+            String type = ExceptionInput.type();
+
 
             customerList.add(new Customer(id, name, dateOfBirth, address, gender, idCard, phoneNumber, email, type));
+
+            String line = id + "," +
+                    name + "," +
+                    dateOfBirth + "," +
+                    address + ","
+                    + gender + ","
+                    + idCard + ","
+                    + phoneNumber + ","
+                    + email + "," + type;
+            ReadAndWrite.writerFile(CUSTOMER_LIST,line);
+            
+            System.out.println("Thêm mới thành công ^^");
+
         }
     }
 
@@ -101,7 +136,7 @@ public class CustomerServiceImpl implements CustomerServices {
 
 
     @Override
-    public Object isExisted(int id) {
+    public Customer isExisted(int id) {
         for (Customer item:customerList) {
           if (item.getId()== id)
           return item;

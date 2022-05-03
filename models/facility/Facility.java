@@ -1,21 +1,37 @@
 package models.facility;
 
 public abstract class Facility {
+//    id ,Tên dịch vụ, Diện tích sử dụng, Chi phí thuê, Số lượng người tối đa, Kiểu thuê
+    private String idFacility;
     private String nameServices;
-    private int usableArea;
-    private double rentalCosts;
+    private double usableArea;
+    private int rentalCosts;
     private int maximumPeople;
     private String rentalType;
 
     public Facility() {
     }
 
-    public Facility(String nameServices, int usableArea, double rentalCosts, int maximumPeople, String rentalType) {
+    public Facility(String idFacility,
+                    String nameServices,
+                    double usableArea,
+                    int rentalCosts,
+                    int maximumPeople,
+                    String rentalType) {
+        this.idFacility = idFacility;
         this.nameServices = nameServices;
         this.usableArea = usableArea;
         this.rentalCosts = rentalCosts;
         this.maximumPeople = maximumPeople;
         this.rentalType = rentalType;
+    }
+
+    public String getIdFacility() {
+        return idFacility;
+    }
+
+    public void setIdFacility(String idFacility) {
+        this.idFacility = idFacility;
     }
 
     public String getNameServices() {
@@ -26,11 +42,11 @@ public abstract class Facility {
         this.nameServices = nameServices;
     }
 
-    public int getUsableArea() {
-        return usableArea;
+    public double getUsableArea() {
+        return  usableArea;
     }
 
-    public void setUsableArea(int usableArea) {
+    public void setUsableArea(double usableArea) {
         this.usableArea = usableArea;
     }
 
@@ -38,7 +54,7 @@ public abstract class Facility {
         return rentalCosts;
     }
 
-    public void setRentalCosts(double rentalCosts) {
+    public void setRentalCosts(int rentalCosts) {
         this.rentalCosts = rentalCosts;
     }
 
@@ -60,11 +76,12 @@ public abstract class Facility {
 
     @Override
     public String toString() {
-        return "Facility " +
-                "nameServices= " + nameServices + '\'' +
+        return "Facility: " +
+                " idFacility= " + idFacility +
+                ", nameServices= " + nameServices  +
                 ", usableArea= " + usableArea +
                 ", rentalCosts= " + rentalCosts +
                 ", maximumPeople= " + maximumPeople +
-                ", rentalType= " + rentalType ;
+                ", rentalType= " + rentalType;
     }
 }

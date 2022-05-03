@@ -14,7 +14,15 @@ public class Customer extends Person {
 
 
 
-    public Customer(int id, String name, String dateOfBirth, String address, String gender, String idCard, String phoneNumber, String email, String type) {
+    public Customer(int id,
+                    String name,
+                    String dateOfBirth,
+                    String address,
+                    String gender,
+                    String idCard,
+                    String phoneNumber,
+                    String email,
+                    String type) {
         super(id, name, dateOfBirth, address);
         this.gender = gender;
         this.idCard = idCard;
@@ -66,10 +74,19 @@ public class Customer extends Person {
     @Override
     public String toString() {
         return "Customer: " + super.toString() +
-                "gender= " + gender +
+                ", gender= " + gender +
                 ", idCard= " + idCard +
                 ", phoneNumber= " + phoneNumber +
                 ", email= " + email +
                 ", type= " + type ;
+    }
+    public String writeToFile(){
+        return super.writeToFile()+","+
+                    gender +
+                "," + idCard +
+                "," + phoneNumber +
+                "," + email +
+                "," + type ;
+
     }
 }
