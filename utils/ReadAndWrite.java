@@ -1,10 +1,10 @@
 package utils;
 
+import models.person.Customer;
 import models.person.Employee;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 public class ReadAndWrite {
@@ -61,8 +61,20 @@ public class ReadAndWrite {
         }
 
     }
+    public static void reWriteToFileCustomer(List<Customer> customerList, String path){
+        List<Customer> list = customerList;  //trung vs hao
+        try {
+            File file = new File(path);
+            file.delete();
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+            for (Customer lists: list){
+                bufferedWriter.write(lists.writeToFile());
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-
-
+    }
 }

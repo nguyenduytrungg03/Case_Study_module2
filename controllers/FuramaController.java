@@ -5,11 +5,14 @@ import services.impl.CustomerServiceImpl;
 import services.impl.EmployeeServiceImpl;
 import services.impl.FacilityServiceImpl;
 
+import java.io.IOException;
 import java.util.Scanner;
-import static utils.exception.ExceptionMenu.exceptiondisplayMainMenu;
+
+import static utils.exception.ExceptionMenu.*;
 
 public class FuramaController {
     public static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         displayMainMenu();
     }
@@ -25,51 +28,66 @@ public class FuramaController {
             System.out.println("6.EXIT");
             System.out.println("Enter number: ");
 
-
-            switch (exceptiondisplayMainMenu()) {  // 1 -> 6   a 7>
-                case 1:
-                    displayEmployeeMenu();
-                    break;
-                case 2:
-                    displayCustomer();
-                    break;
-                case 3:
-                    displayFacilityMenu();
-                    break;
-                case 4:
-                    displayBooking();
-                    break;
-                case 5:
-                    displayPromotion();
-                    break;
-                case 6:
-                    System.exit(6);
-                    break;
+            try {
+                switch (Integer.parseInt(scanner.nextLine())) {  // 1 -> 6   a 7>
+                    case 1:
+                        displayEmployeeMenu();
+                        break;
+                    case 2:
+                        displayCustomer();
+                        break;
+                    case 3:
+                        displayFacilityMenu();
+                        break;
+                    case 4:
+                        displayBooking();
+                        break;
+                    case 5:
+                        displayPromotion();
+                        break;
+                    case 6:
+                        System.exit(6);
+                        break;
+                    default:
+                        System.out.println("Retry");
+                }
+            } catch (NumberFormatException e ) {
+                System.out.println("Please enter number");
             }
+
         }
+
     }
 
-    public static void displayEmployeeMenu()  {
+
+    public static void displayEmployeeMenu() {
         EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
-        boolean check =true;
+        boolean check = true;
         while (check) {
             System.out.println("1.Display list employee");
             System.out.println("2.Add new employee");
             System.out.println("3.Edit employee");
             System.out.println("4.Back to menu");
+            try {
 
-            switch (Integer.parseInt(scanner.nextLine())) {
-                case 1:
-                    employeeService.display();
-                    break;
-                case 2:
-                    employeeService.addNew();
-                    break;
-                case 3:
-                    employeeService.edit();
-                    break;
-                case 4:
-                    return;
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        employeeService.display();
+                        break;
+                    case 2:
+                        employeeService.addNew();
+                        break;
+                    case 3:
+                        employeeService.edit();
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Retry");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter number");
             }
         }
     }
@@ -82,20 +100,26 @@ public class FuramaController {
             System.out.println("2.Add new customer");
             System.out.println("3.Edit customer");
             System.out.println("4.Return main menu");
-            switch (Integer.parseInt(scanner.nextLine())) {
-                case 1:
-                    customerServices.display();
-                    break;
-                case 2:
-                    customerServices.addNew();
-                    break;
-                case 3:
-                    customerServices.edit();
-                    break;
-                case 4:
-                    return;
+            try {
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        customerServices.display();
+                        break;
+                    case 2:
+                        customerServices.addNew();
+                        break;
+                    case 3:
+                        customerServices.edit();
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Retry");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter number");
             }
-
         }
     }
 
@@ -107,20 +131,25 @@ public class FuramaController {
             System.out.println("2.Add new facility");
             System.out.println("3.Display list facility Maintenance");
             System.out.println("4.Return main menu");
+            try {
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        facilityService.display();
+                        break;
+                    case 2:
+                        addNewFacilityMenu();
+                        break;
+                    case 3:
 
-            switch (Integer.parseInt(scanner.nextLine())) {
-                case 1:
-                    facilityService.display();
-                    break;
-                case 2:
-                    addNewFacilityMenu();
-                    break;
-                case 3:
-
-                case 4:
-                    return;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Retry");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter number");
             }
-
         }
     }
 
@@ -132,27 +161,29 @@ public class FuramaController {
             System.out.println("2.Add new Room");
             System.out.println("3.Add new Villa");
             System.out.println("4.Return main menu");
-
-            switch (Integer.parseInt(scanner.nextLine())) {
-                case 1:
-                    facilityService.addNewHouse();
-                    check=false;
-                    break;
-
-                case 2:
-                    facilityService.addNewRoom();
-                    check=false;
-                    break;
-
-                case 3:
-                    facilityService.addNewVilla();
-                    check=false;
-                    break;
-
-                case 4:
-                    return;
+            try {
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        facilityService.addNewHouse();
+                        check = false;
+                        break;
+                    case 2:
+                        facilityService.addNewRoom();
+                        check = false;
+                        break;
+                    case 3:
+                        facilityService.addNewVilla();
+                        check = false;
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Retry");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter number");
             }
-
         }
     }
 
@@ -164,17 +195,23 @@ public class FuramaController {
             System.out.println("3.Edit booking");
             System.out.println("4.Return main menu");
             Scanner sc = new Scanner(System.in);
-            switch (Integer.parseInt(sc.nextLine())) {
-                case 1:
+            try {
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
 
-                case 2:
+                    case 2:
 
-                case 3:
+                    case 3:
 
-                case 4:
-                    return;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Retry");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter number");
             }
-
         }
     }
 
@@ -185,9 +222,16 @@ public class FuramaController {
             System.out.println("2.Display list customers get voucher");
             System.out.println("3.Return main menu");
             Scanner sc = new Scanner(System.in);
-            switch (Integer.parseInt(sc.nextLine())) {
-                case 3:
-                    return;
+            try {
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Retry");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Please enter number");
             }
         }
     }

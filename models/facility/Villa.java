@@ -55,4 +55,10 @@ public class Villa extends Facility {
                 ", areaPool= " + areaPool +
                 ", floor= " + floor;
     }
+    public String writeToFile(){
+        return super.writeToFile() + "," +
+                standardVilla +
+                "," + areaPool +
+                "," + floor;
+    }
 }

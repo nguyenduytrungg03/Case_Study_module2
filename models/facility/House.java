@@ -45,4 +45,9 @@ public class House extends Facility {
                 "standardRoom= " + standardRoom +
                 ", floor= " + floor ;
     }
+    public String writeToFile(){
+        return super.writeToFile() + ","
+                + standardRoom
+                + "," + floor ;
+    }
 }

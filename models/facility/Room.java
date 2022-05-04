@@ -32,4 +32,8 @@ public class Room extends Facility {
         return "Room: " + super.toString() +
                 ", freeService= " + freeService ;
     }
+    public String writeToFile(){
+        return super.writeToFile() + "," +
+                freeService;
+    }
 }

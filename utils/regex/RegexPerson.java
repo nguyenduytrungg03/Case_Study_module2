@@ -64,7 +64,6 @@ public class RegexPerson {
                 System.err.println("id phai la so, vui long nhap lai");
             }
         }
-
     }
 
 }

@@ -84,4 +84,12 @@ public abstract class Facility {
                 ", maximumPeople= " + maximumPeople +
                 ", rentalType= " + rentalType;
     }
+    public String writeToFile(){
+        return  idFacility +
+                "," + nameServices  +
+                "," + usableArea +
+                "," + rentalCosts +
+                "," + maximumPeople +
+                "," + rentalType;
+    }
 }
