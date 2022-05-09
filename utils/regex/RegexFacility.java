@@ -15,6 +15,7 @@ public class RegexFacility {
     public static final String REGEX_EMAIL ="^[A-Za-z0-9+_.-]+@(.+)$";
     //    ktr sdt đầu là số 0
     public static final String REGEX_NUMBERPHONE ="^0[0-9]{9,}$";
+    static Scanner scanner = new Scanner(System.in);
 
 
     public static String inputIdVilla() {
@@ -80,7 +81,7 @@ public class RegexFacility {
         return RegexFacility.regexStr(scanner.nextLine(), RegexFacility.REGEX_INT,"Bạn đã nhập sai định dạng, " +
                 "số tầng phải bắt đầu bằng số dương ");
     }
-    static Scanner scanner = new Scanner(System.in);
+
 
     public static String regexStr(String temp, String regex, String error) {
         boolean check = true;

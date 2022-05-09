@@ -16,20 +16,17 @@ public class CustomerServiceImpl implements CustomerServices {
     private static List<Customer> customerList = getCustomerList();
     private Scanner scanner = new Scanner(System.in);
     final static String CUSTOMER_LIST = "src\\data\\customer.csv";
-
+    Customer customer;
     @Override
     public void display() {
         for (Customer customer : customerList) {
             System.out.println(customer);
         }
     }
-
     public static List<Customer> getCustomerList() {
         List<String[]> listStr = ReadAndWrite.readFile(CUSTOMER_LIST);
 
         List<Customer> listFileCustomer = new ArrayList<>();
-
-        Customer customer;
         for (String[] item : listStr) {
             listFileCustomer.add(new Customer(Integer.parseInt(item[0]),
                     item[1],
@@ -92,7 +89,9 @@ public class CustomerServiceImpl implements CustomerServices {
                 + idCard + ","
                 + phoneNumber + ","
                 + email + "," + type;
-        ReadAndWrite.writerFile(CUSTOMER_LIST, line);
+        List<String> stringList = new ArrayList<>();
+        stringList.add(line);
+        ReadAndWrite.writerFile(CUSTOMER_LIST, stringList);
 
         System.out.println("Thêm mới thành công ^^");
 

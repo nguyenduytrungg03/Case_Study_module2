@@ -34,12 +34,14 @@ public class ReadAndWrite {
         return myList;
     }
 
-    public static void writerFile(String path, String line){
-        File  file = new File(path);
+    public static void writerFile(String path, List<String> stringList){
+            File  file = new File(path);
        try(FileWriter fileWriter = new FileWriter(file,true);
        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)){
-            bufferedWriter.write(line);
-            bufferedWriter.newLine();
+           for (String line: stringList) {
+               bufferedWriter.write(line);
+               bufferedWriter.newLine();
+           }
        } catch (IOException e) {
            e.printStackTrace();
        }

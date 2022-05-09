@@ -8,7 +8,7 @@ import services.impl.FacilityServiceImpl;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static utils.exception.ExceptionMenu.*;
+//import static utils.exception.ExceptionMenu.*;
 
 public class FuramaController {
     public static Scanner scanner = new Scanner(System.in);
@@ -69,7 +69,6 @@ public class FuramaController {
             System.out.println("3.Edit employee");
             System.out.println("4.Back to menu");
             try {
-
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
                         employeeService.display();
@@ -122,7 +121,6 @@ public class FuramaController {
             }
         }
     }
-
     public static void displayFacilityMenu() {
         FacilityServiceImpl facilityService = new FacilityServiceImpl();
         boolean check = true;
@@ -152,7 +150,6 @@ public class FuramaController {
             }
         }
     }
-
     public static void addNewFacilityMenu() {
         FacilityServiceImpl facilityService = new FacilityServiceImpl();
         boolean check = true;
@@ -186,7 +183,6 @@ public class FuramaController {
             }
         }
     }
-
     public static void displayBooking() {
         boolean check = true;
         while (check) {
@@ -214,7 +210,6 @@ public class FuramaController {
             }
         }
     }
-
     public static void displayPromotion() {
         boolean check = true;
         while (check) {

@@ -4,7 +4,6 @@ import models.facility.Facility;
 import models.facility.House;
 import models.facility.Room;
 import models.facility.Villa;
-import models.person.Employee;
 import services.FacilityService;
 import utils.ReadAndWrite;
 import utils.regex.RegexFacility;
@@ -14,7 +13,7 @@ import java.util.*;
 public class FacilityServiceImpl implements FacilityService {
     private static Map<Facility, Integer> facilityIntegerMap = getFacility();
     private static Scanner scanner = new Scanner(System.in);
-    final static String FACILITY_LIST = "src\\data\\facility.csv";
+    static final  String FACILITY_LIST = "src\\data\\facility.csv";
 
     //villa
     /*
@@ -23,7 +22,6 @@ public class FacilityServiceImpl implements FacilityService {
      * booking SVVL-1234,1;
      * contract SVVL-1234,1,true;
      * */
-
 
     @Override
     public void display() {
@@ -34,35 +32,36 @@ public class FacilityServiceImpl implements FacilityService {
     }
 
     public static Map<Facility, Integer> getFacility() {
-        Map<Facility, Integer> list = new LinkedHashMap<>();
+        Map<Facility, Integer> listFacility = new LinkedHashMap<>();
         List<String[]> stringList = ReadAndWrite.readFile(FACILITY_LIST);
         for (String[] item : stringList) {
-            if (item[1].equals("Villa")) {
+            if (item[0].contains("SVVL")) {
                 Villa villa = new Villa(item[0], item[1],
                         Double.parseDouble(item[2])
                         , Integer.parseInt(item[3]), Integer.parseInt(item[4])
                         , item[5], item[6]
                         , Double.parseDouble(item[7])
                         , Integer.parseInt(item[8]));
-                list.put(villa, Integer.parseInt(item[9]));
+                listFacility.put(villa, Integer.parseInt(item[9]));
 
-            } else if (item[2].equals("House")) {
+            } else if (item[0].contains("SVHO")) {
                 House house = new House(item[0], item[1]
                         , Double.parseDouble(item[2])
                         , Integer.parseInt(item[3])
                         , Integer.parseInt(item[4]), item[5]
                         , item[6], Integer.parseInt(item[7]));
-                list.put(house, Integer.parseInt(item[8])); //
+                listFacility.put(house, Integer.parseInt(item[8])); //
+
             } else {
                 Room room = new Room(item[0], item[1]
                         , Double.parseDouble(item[2])
                         , Integer.parseInt(item[3])
                         , Integer.parseInt(item[4])
                         , item[5], item[6]);
-                list.put(room, Integer.parseInt(item[7]));
+                listFacility.put(room, Integer.parseInt(item[7]));
             }
         }
-        return list;
+        return listFacility;
     }
 
     @Override
@@ -90,8 +89,14 @@ public class FacilityServiceImpl implements FacilityService {
 
         int floor = Integer.parseInt(RegexFacility.inputFloor());
 
-        Villa villa = new Villa(idFacility, nameServices, usableArea, rentalCosts, maximumPeople, rentalType, standardVilla, areaPool, floor);
-        ReadAndWrite.writerFile(FACILITY_LIST, villa.writeToFile() + ",0");
+        Villa villa = new Villa(idFacility, nameServices,
+                                usableArea, rentalCosts,
+                                maximumPeople, rentalType,
+                                standardVilla, areaPool, floor);
+
+        List<String> stringList = new ArrayList<>();
+        stringList.add(villa.writeToFile()+",0");
+        ReadAndWrite.writerFile(FACILITY_LIST, stringList);
         System.out.println("Thêm thành công ^^");
     }
 
@@ -115,8 +120,13 @@ public class FacilityServiceImpl implements FacilityService {
 
         int floor = Integer.parseInt(RegexFacility.inputFloor());
 
-        House house = new House(idFacility, nameServices, usableArea, rentalCosts, maximumPeople, rentalType, standardRoom, floor);
-        ReadAndWrite.writerFile(FACILITY_LIST, house.writeToFile() + ",0");
+        House house = new House(idFacility, nameServices,
+                                usableArea, rentalCosts,
+                                maximumPeople, rentalType,
+                                standardRoom, floor);
+        List<String> stringList = new ArrayList<>();
+        stringList.add(house.writeToFile()+",0");
+        ReadAndWrite.writerFile(FACILITY_LIST, stringList);
         System.out.println("Thêm thành công ^^");
     }
 
@@ -142,9 +152,14 @@ public class FacilityServiceImpl implements FacilityService {
 
         System.out.println("Nhập dịch vụ miễn phí: ");
         String freeService = scanner.nextLine();
+        Room room = new Room(idFacility, nameServices,
+                             usableArea, rentalCosts,
+                             maximumPeople, rentalType,
+                             freeService);
 
-        Room room = new Room(idFacility, nameServices, usableArea, rentalCosts, maximumPeople, rentalType, freeService);
-        ReadAndWrite.writerFile(FACILITY_LIST, room.writeToFile() + ",0");
+        List<String> stringList = new ArrayList<>();
+        stringList.add(room.writeToFile()+",0");
+        ReadAndWrite.writerFile(FACILITY_LIST,stringList);
         System.out.println("Thêm thành công ^^");
     }
 

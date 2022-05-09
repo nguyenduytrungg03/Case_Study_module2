@@ -17,7 +17,7 @@ import static utils.ReadAndWrite.reWriteToFileEmployee;
 public class EmployeeServiceImpl implements EmployeeServices {
     public static List<Employee> employeeList = getEmployeeList();
     final static String EMPLOYEE_LIST = "src\\data\\employee.csv";
-
+    Employee employee;
 
     @Override
     public void display() {
@@ -89,14 +89,17 @@ public class EmployeeServiceImpl implements EmployeeServices {
 
         System.out.println("Nhập lương");
         int salary = Integer.parseInt(scanner.nextLine());
-        Employee employee = new Employee(id, name,
+        employee = new Employee(id, name,
                 dateOfBirth, address, gender,
                 idCard, phoneNumber,
                 email, academyLevel,
                 position, salary);
         employeeList.add(employee);
 
-        ReadAndWrite.writerFile(EMPLOYEE_LIST, employee.writeToFile());
+        List<String> stringList = new ArrayList<>();
+        stringList.add(employee.writeToFile());
+        ReadAndWrite.writerFile(EMPLOYEE_LIST,stringList);
+
         System.out.println("Thêm thành công ^^");
     }
 
